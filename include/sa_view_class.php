@@ -37,7 +37,8 @@ class SimpleAmazonView {
 		$this->img = array(
 			'small'     => SIMPLE_AMAZON_IMG_URL . '/amazon_noimg_small.png',
 			'medium'    => SIMPLE_AMAZON_IMG_URL . '/amazon_noimg.png',
-			'large'     => SIMPLE_AMAZON_IMG_URL . '/amazon_noimg_large.png'
+			'large'     => SIMPLE_AMAZON_IMG_URL . '/amazon_noimg_large.png',
+			'detai'     => SIMPLE_AMAZON_IMG_URL . '/detai.png'
 		);
 	}
 
@@ -255,6 +256,8 @@ class SimpleAmazonView {
 			$output = '<div class="simple-amazon-view">' . "\n";
 			$output .= "\t" . '<p class="sa-img-box"><a href="'.$url.'"' . $windowtarget . '><img src="' . $img->URL . '" height="' . $img->Height . '" width="' . $img->Width . '" alt="" class="sa-image" /></a></p>' . "\n";
 			$output .= "\t" . '<p class="sa-title"><a href="'.$url.'"' . $windowtarget . '>' . $attr->Title . '</a></p>' . "\n";
+			$output .= "\t" . '<p class="amazon-button"><a href="' . $url . '"' . $windowtarget . '>' . '<img src="' . $this->img['detai'] . '" alt="' . $attr->Title . 'の詳細ページへ" /></a></p>' . "\n";
+
 			$output .= '</div>' . "\n";
 		}
 
@@ -341,6 +344,7 @@ class SimpleAmazonView {
 			}
 			if( $attr->ListPrice->FormattedPrice ) $output_list .= "\t" . "<li>定価：" . $attr->ListPrice->FormattedPrice . "</li>\n";
 //			if( $rating ) $output_list .= "\t" . "<li>おすすめ度：" . $rating . "</li>\n";
+			$output_list .= "\t" . '<li class="amazon-button"><a href="' . $url . '"' . $windowtarget . '>' . '<img src="' . $this->img['detai'] . '" alt="' . $attr->Title . 'の詳細ページへ" /></a></li>' . "\n";
 
 			if ( $output_list ) {
 				$output .= "\t" .'<ul class="sa-detail">' . "\n";
