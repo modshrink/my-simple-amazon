@@ -1,11 +1,12 @@
 <?php
 /*
-Plugin Name: Simple Amazon
-Plugin URI: http://www.icoro.com/
+Plugin Name: My Simple Amazon
+Plugin URI: http://www.modshrink.com/
 Description: ASIN を指定して Amazon から個別商品の情報を取出します。BOOKS, DVD, CD は詳細情報を取り出せます。
-Author: icoro
-Version: 5.4
-Author URI: http://www.icoro.com/
+Author: mayoibi
+Version: 0.0.1
+Author URI: http://www.modshrink.com/
+Code based on icoro(http://www.icoro.com/simple-amazon)
 Special Thanks: tomokame (http://http://tomokame.moo.jp/)
 Special Thanks: websitepublisher.net (http://www.websitepublisher.net/article/aws-php/)
 Special Thanks: hiromasa.zone :o) (http://hiromasa.zone.ne.jp/)
