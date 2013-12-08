@@ -120,7 +120,7 @@ class SimpleAmazonAdmin {
 			$this->options['associatesid_us'];
 
 		if( !$check_associatesid ) {
-			$simple_amazon_admin_html .= '<div class="error"><p><strong>アソシエイト ID</strong> を設定して下さい。</p></div>' . "\n";
+			$simple_amazon_admin_html .= '<div class="error"><p><strong>アソシエイト ID</strong>を設定して下さい。</p></div>' . "\n";
 		}
 
 		$simple_amazon_admin_html .=
@@ -142,31 +142,31 @@ class SimpleAmazonAdmin {
 			'<table class="form-table">' . "\n" .
 
 			'<tr><th>商品リンクの動作</th>' . "\n" .
-			'<td><input type="radio" name="windowtarget" value="self"' . $selfwindow . ' />&nbsp;同じウィンドウ ( target 指定なし )<br />' . "\n" .
-			'<input type="radio" name="windowtarget" value="newwin"' . $newwindow . ' />&nbsp;新規ウィンドウ ( target="_blank" )</td>' . "\n" .
+			'<td><p><input type="radio" name="windowtarget" value="self"' . $selfwindow . ' /> 同じウィンドウ(target 指定なし)</p>' . "\n" .
+			'<p><input type="radio" name="windowtarget" value="newwin"' . $newwindow . ' /> 新規ウィンドウ(target="_blank")</p></td>' . "\n" .
 			'</tr>' . "\n" .
 
 			'<tr><th>商品詳細の表示項目</th>' . "\n" .
-			'<td><input type="radio" name="layout_type" value="0"' . $default_layout . ' />&nbsp;Full ( 画像、タイトル、出版社、発売時期、著者、価格、本のタイプ、ページ数、ISBN。本以外はこれに準ずる項目 )<br />' . "\n" .
-			'<input type="radio" name="layout_type" value="1"' . $medium_layout . ' />&nbsp;Detail ( 画像、タイトル、出版社、著者、発売時期。Fullから価格情報、コード情報を省略 )<br />' . "\n" .
-			'<input type="radio" name="layout_type" value="2"' . $simple_layout . ' />&nbsp;Title &amp; Image ( 画像とタイトルのみ )<br />' . "\n" .
-			'<input type="radio" name="layout_type" value="3"' . $noimage_layout . ' />&nbsp;Title ( タイトルのみ )</td>' . "\n" .
+			'<td><p><input type="radio" name="layout_type" value="0"' . $default_layout . ' /> Full(画像、タイトル、出版社、発売時期、著者、価格、本のタイプ、ページ数、ISBN。本以外はこれに準ずる項目)</p>' . "\n" .
+			'<p><input type="radio" name="layout_type" value="1"' . $medium_layout . ' /> Detail(画像、タイトル、出版社、著者、発売時期。Fullから価格情報、コード情報を省略)</p>' . "\n" .
+			'<p><input type="radio" name="layout_type" value="2"' . $simple_layout . ' /> Title &amp; Image(画像とタイトルのみ)</p>' . "\n" .
+			'<p><input type="radio" name="layout_type" value="3"' . $noimage_layout . ' /> Title(タイトルのみ)</p></td>' . "\n" .
 			'</tr>' . "\n" .
 
 			'<tr><th>商品画像のサイズ</th>' . "\n" .
-			'<td><input type="radio" name="imgsize" value="small"' . $s_imgsize . ' />&nbsp;Small ( 最大 75 x 75px )<br />' . "\n" .
-			'<input type="radio" name="imgsize" value="medium"' . $m_imgsize . ' />&nbsp;Medium ( 最大 160 x 160px )<br />' . "\n" .
-			'<input type="radio" name="imgsize" value="large"' . $l_imgsize . ' />&nbsp;Large ( 最大 500 x 500px )</td>' . "\n" .
+			'<td><p><input type="radio" name="imgsize" value="small"' . $s_imgsize . ' /> Small(最大 75x75px)</p>' . "\n" .
+			'<p><input type="radio" name="imgsize" value="medium"' . $m_imgsize . ' /> Medium(最大 160x160px)</p>' . "\n" .
+			'<p><input type="radio" name="imgsize" value="large"' . $l_imgsize . ' /> Large(最大 500x500px)</p></td>' . "\n" .
 			'</tr>' . "\n" .
 
 			'<tr><th>CSSの読み込み</th>' . "\n" .
-			'<td><input type="radio" name="setcss" value="no"' . $setcss_no . ' />&nbsp;style.css ( デフォルトのCSSのみ使用 )<br />' . "\n" .
-			'<input type="radio" name="setcss" value="yes"' . $setcss_yes . ' />&nbsp;simple-amazon.css ( Simple Amazon付属のCSSを使用 )</td>' . "\n" .
+			'<p><td><input type="radio" name="setcss" value="no"' . $setcss_no . ' /> style.css ( デフォルトのCSSのみ使用 )</p>' . "\n" .
+			'<p><input type="radio" name="setcss" value="yes"' . $setcss_yes . ' /> simple-amazon.css ( Simple Amazon付属のCSSを使用 )</p></td>' . "\n" .
 			'</tr>' . "\n" .
 
 			'<tr><th>アンインストール時の処理</th>' . "\n" .
-			'<td><input type="radio" name="delete_setting" value="no"' . $delete_setting_no . ' />&nbsp;設定を残す<br />' . "\n" .
-			'<input type="radio" name="delete_setting" value="yes"' . $delete_setting_yes . ' />&nbsp;設定を削除する</td>' . "\n" .
+			'<td><p><input type="radio" name="delete_setting" value="no"' . $delete_setting_no . ' /> 設定を残す</p>' . "\n" .
+			'<p><input type="radio" name="delete_setting" value="yes"' . $delete_setting_yes . ' /> 設定を削除する</p></td>' . "\n" .
 			'</tr>' . "\n" .
 
 			'</table>' . "\n" .
