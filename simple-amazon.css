@@ -43,3 +43,53 @@ div.simple-amazon-view ul.sa-detail {
 div.simple-amazon-view p {
 	margin: 0;
 }
+
+
+
+/* =レーティング
+----------------------------------------------- */
+.rating-star {
+	height: 20px;
+	width: 100px;
+	background: url(images/rating.png) no-repeat;
+}
+
+.late0\.5 {
+	background-position: 0px 0px;
+}
+
+.rate1 {
+	background-position: 0px -20px;
+}
+
+.rate1\.5 {
+	background-position: 0px -40px;
+}
+
+.rate2 {
+	background-position: 0px -60px;
+}
+
+.rate2\.5 {
+	background-position: 0px -80px;
+}
+
+.rate3 {
+	background-position: 0px -100px;
+}
+
+.rate3\.5 {
+	background-position: 0px -120px;
+}
+
+.rate4 {
+	background-position: 0px -140px;
+}
+
+.rate4\.5 {
+	background-position: 0px -160px;
+}
+
+.rate5 {
+	background-position: 0px -180px;
+}
