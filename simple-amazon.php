@@ -21,7 +21,7 @@ if( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) die();
  * 定数の設定 (主にディレクトリのパスとか)
  *****************************************************************************/
 if ( ! defined( 'SIMPLE_AMAZON_VER' ) )
-	define( 'SIMPLE_AMAZON_VER', '5.4' );
+	define( 'SIMPLE_AMAZON_VER', '0.0.1' );
 
 if ( ! defined( 'SIMPLE_AMAZON_DIR_NAME' ) )
 	define( 'SIMPLE_AMAZON_DIR_NAME', plugin_basename( dirname( __FILE__ ) ) );
@@ -72,6 +72,7 @@ include_once(SIMPLE_AMAZON_PLUGIN_DIR . '/include/sa_view_class.php');
 include_once(SIMPLE_AMAZON_PLUGIN_DIR . '/include/sa_xmlparse_class.php');
 include_once(SIMPLE_AMAZON_PLUGIN_DIR . '/include/sa_cache_control_class.php');
 include_once(SIMPLE_AMAZON_PLUGIN_DIR . '/include/sa_admin_class.php');
+include_once(SIMPLE_AMAZON_PLUGIN_DIR . '/include/sa_widget_class.php');
 
 $simpleAmazonView  = new SimpleAmazonView();
 $simpleAmazonAdmin = new SimpleAmazonAdmin();
@@ -90,7 +91,7 @@ function add_simpleamazon_stylesheet(){
 	global $simple_amazon_options;
 
 	if( $simple_amazon_options['setcss'] == 'yes') {
-		wp_enqueue_style('simple-amazon', SIMPLE_AMAZON_PLUGIN_URL.'/include/simple-amazon.css', array(), SIMPLE_AMAZON_VER);
+		wp_enqueue_style('simple-amazon', SIMPLE_AMAZON_PLUGIN_URL.'/simple-amazon.css', array(), SIMPLE_AMAZON_VER);
 	}
 }
 add_action('wp_head', 'add_simpleamazon_stylesheet', 1);
@@ -143,5 +144,127 @@ function simple_amazon_custum_view() {
 	global $simpleAmazonView;
 	$simpleAmazonView->view_custom_field();
 }
+
+/* ウィジェット表示 */
+add_action('widgets_init', create_function('', 'return register_widget("MyWidget");'));
+
+
+/******************************************************************************
+ * 投稿画面にASINとレート欄を追加
+ *****************************************************************************/
+
+// 中身
+function sa_meta_box_content() {
+	$checked0 ="";
+	$checked1 ="";
+	$checked2 ="";
+	$checked3 ="";
+	$checked4 ="";
+	$checked5 ="";
+	$checked6 ="";
+	$checked7 ="";
+	$checked8 ="";
+	$checked9 ="";
+	$sa_rate = "";
+	
+	$custom_fields = get_post_custom();                 // 指定した投稿のすべてのカスタムフィールド情報を取得
+	$my_custom_field = $custom_fields['rating']; // 'my_custom_field' というキーを持つカスタムフィールドの値を取得
+	foreach ( $my_custom_field as $key => $rating_value )
+	if($rating_value==5){ $checked0 = ' checked="checked"';} 
+	if($rating_value==4.5){ $checked1 = ' checked="checked"';} 
+	if($rating_value==4){ $checked2 = ' checked="checked"';} 
+	if($rating_value==3.5){ $checked3 = ' checked="checked"';} 
+	if($rating_value==3){ $checked4 = ' checked="checked"';} 
+	if($rating_value==2.5){ $checked5 = ' checked="checked"';} 
+	if($rating_value==2){ $checked6 = ' checked="checked"';} 
+	if($rating_value==1.5){ $checked7 = ' checked="checked"';} 
+	if($rating_value==1){ $checked8 = ' checked="checked"';} 
+	if($rating_value==0.5){ $checked9 = ' checked="checked"';} 
+?>
+
+<p>My Simple Amazonウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。 </p>
+
+<h4>レート</h4>
+	<ul class="sa-admin-rating">
+		<li>最高</li>
+		<li><input id="rate5" type="radio" name="sa-rate" value="5"<?php echo $checked0; ?>><label for="rate5">5</label></li>
+		<li><input id="rate4.5" type="radio" name="sa-rate" value="4.5"<?php echo $checked1; ?>><label for="rate4.5">4.5</label></li>
+		<li><input id="rate4" type="radio" name="sa-rate" value="4"<?php echo $checked2; ?>><label for="rate4">4</label></li>
+		<li><input id="rate3.5" type="radio" name="sa-rate" value="3.5"<?php echo $checked3; ?>><label for="rate3.5">3.5</label></li>
+		<li><input id="rate3" type="radio" name="sa-rate" value="3"<?php echo $checked4; ?>><label for="rate3">3</label></li>
+		<li><input id="rate2.5" type="radio" name="sa-rate" value="2.5"<?php echo $checked5; ?>><label for="rate2.5">2.5</label></li>
+		<li><input id="rate2" type="radio" name="sa-rate" value="2"<?php echo $checked6; ?>><label for="rate2">2</label></li>
+		<li><input id="rate1.5" type="radio" name="sa-rate" value="1.5"<?php echo $checked7; ?>><label for="rate1.5">1.5</label></li>
+		<li><input id="rate1" type="radio" name="sa-rate" value="1"<?php echo $checked8; ?>><label for="rate1">1</label></li>
+		<li><input id="rate0.5" type="radio" name="sa-rate" value="0.5"<?php echo $checked9; ?>><label for="rate0.5">0.5</label></li>
+		<li>最低</li>
+	</ul>
+	<h4>AmazonへのリンクまたはASINコード</h4>
+	<input type="text" value="" />
+<?php
+
+//update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
+
+
+} //sa_meta_box_content()
+
+	function post_rating($post_id) {
+			$post = get_post($post_id);
+			$sa_post_id = $post->ID;
+			$sa_rate = $_POST["sa-rate"];
+			$prev_value = get_post_meta($sa_post_id, "rating", true);
+			update_post_meta($post_id, "rating", $sa_rate, $prev_value);
+
+	}
+
+	add_action('publish_post', 'post_rating');
+ 
+// メタボックスを追加する関数
+function sa_meta_box_output() {
+    add_meta_box('nskw_meta_post_page', 'あなたの評価 - My Simple Amazon', 'sa_meta_box_content', 'post', 'side', 'high' );
+}
+ 
+// フックする
+add_action('admin_menu', 'sa_meta_box_output' );
+
+
+/******************************************************************************
+ * 管理画面でAJAXを使用
+
+add_action( 'admin_footer', 'my_action_javascript' );
+
+function my_action_javascript() {
+?>
+<script type="text/javascript" >
+jQuery(document).ready(function($) {
+
+	var data = {
+		action: 'my_action',
+		whatever: 1234
+	};
+
+	$.post(ajaxurl, data, function(response) {
+		alert('Got this from the server: ' + response);
+	});
+});
+</script>
+<?php
+}
+
+add_action( 'wp_ajax_my_action', 'my_action_callback' );
+
+function my_action_callback() {
+	global $wpdb; // this is how you get access to the database
+
+	$whatever = intval( $_POST['whatever'] );
+
+	$whatever += 10;
+
+        echo $whatever;
+
+	die();
+}
+
+ *****************************************************************************/
 
 ?>
