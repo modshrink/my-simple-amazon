@@ -155,6 +155,8 @@ add_action('widgets_init', create_function('', 'return register_widget("MyWidget
 
 // 中身
 function sa_meta_box_content() {
+
+	//レートの取得
 	$checked0 ="";
 	$checked1 ="";
 	$checked2 ="";
@@ -167,9 +169,9 @@ function sa_meta_box_content() {
 	$checked9 ="";
 	$sa_rate = "";
 	
-	$custom_fields = get_post_custom();                 // 指定した投稿のすべてのカスタムフィールド情報を取得
-	$my_custom_field = $custom_fields['rating']; // 'my_custom_field' というキーを持つカスタムフィールドの値を取得
-	foreach ( $my_custom_field as $key => $rating_value )
+	$custom_fields = get_post_custom();
+	$sa_custom_field_rating = $custom_fields['rating'];
+	foreach ( $sa_custom_field_rating as $key => $rating_value )
 	if($rating_value==5){ $checked0 = ' checked="checked"';} 
 	if($rating_value==4.5){ $checked1 = ' checked="checked"';} 
 	if($rating_value==4){ $checked2 = ' checked="checked"';} 
@@ -180,6 +182,10 @@ function sa_meta_box_content() {
 	if($rating_value==1.5){ $checked7 = ' checked="checked"';} 
 	if($rating_value==1){ $checked8 = ' checked="checked"';} 
 	if($rating_value==0.5){ $checked9 = ' checked="checked"';} 
+
+	//ASINの取得
+	$sa_custom_field_asin = $custom_fields['amazon'];
+	foreach ( $sa_custom_field_asin as $key => $asin_value )
 ?>
 
 <p>My Simple Amazonウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。 </p>
@@ -200,7 +206,7 @@ function sa_meta_box_content() {
 		<li>最低</li>
 	</ul>
 	<h4>AmazonへのリンクまたはASINコード</h4>
-	<input type="text" value="" />
+	<input type="text" name="sa-asin" value="<?php echo $asin_value; ?>" size="40" />
 <?php
 
 //update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
@@ -212,8 +218,11 @@ function sa_meta_box_content() {
 			$post = get_post($post_id);
 			$sa_post_id = $post->ID;
 			$sa_rate = $_POST["sa-rate"];
-			$prev_value = get_post_meta($sa_post_id, "rating", true);
-			update_post_meta($post_id, "rating", $sa_rate, $prev_value);
+			$sa_asin = $_POST["sa-asin"];
+			$prev_rate = get_post_meta($sa_post_id, "rating", true);
+			$prev_asin = get_post_meta($sa_post_id, "amazon", true);
+			update_post_meta($post_id, "rating", $sa_rate, $prev_rate);
+			update_post_meta($post_id, "amazon", $sa_asin, $prev_asin);
 
 	}
 
