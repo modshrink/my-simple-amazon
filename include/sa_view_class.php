@@ -32,6 +32,7 @@ class SimpleAmazonView {
 			case 'ja':    $this->domain = 'amazon.co.jp'; $this->tld = 'jp'; break;
 			case 'en_GB': $this->domain = 'amazon.co.uk'; $this->tld = 'uk'; break;
 			default:      $this->domain = 'amazon.com'; $this->tld = 'com';
+			//default:       $this->domain = 'amazon.co.jp'; $this->tld = 'jp';
 		}
 
 		$this->img = array(
@@ -75,7 +76,12 @@ class SimpleAmazonView {
 		if($amazon_index) {
 			$html = '';
 			foreach($amazon_index as $content) {
-				$html .= $this->replace( $content );
+				if(preg_match("/^[A-Z0-9]{10,13}$/", $content)) {
+					$html .= $this->replace( "<amazon>".$content."</amazon>" );
+				} else {
+					$html .= $this->replace( $content );
+				}
+				
 			}
 			echo $html;
 		}
@@ -90,6 +96,7 @@ class SimpleAmazonView {
 
 //		$regexps[] = '/\[tmkm-amazon\](?P<asin>[A-Z0-9]{10,13})\[\/tmkm-amazon\]/';
 		$regexps[] = '/<amazon>(?P<asin>[A-Z0-9]{10,13})<\/amazon>/';
+		$regexps[] = '/\[amazon\](?P<asin>[A-Z0-9]{10,13})\[\/amazon\]/';
 //		$regexps[] = '/(^|<p>)http:\/\/www\.(?P<domain>amazon\.com|amazon\.ca|amazon\.co\.uk|amazon\.fr|amazon\.de|amazon\.co\.jp|javari\.jp)\/(?P<name>[\S]+)\/dp\/(?P<asin>[A-Z0-9]{10}).*?($|<\/p>)/m';
 //		$regexps[] = '/(^|<p>)http:\/\/www\.(?P<domain>amazon\.com|amazon\.ca|amazon\.co\.uk|amazon\.fr|amazon\.de|amazon\.co\.jp|javari\.jp)\/gp\/product\/(?P<asin>[A-Z0-9]{10}).*?($|<\/p>)/m';
 		$regexps[] = '/(^|<p>)http:\/\/www\.(?P<domain>amazon\..+)\/(?P<name>[\S]+)\/dp\/(?P<asin>[A-Z0-9]{10}).*?($|<\/p>)/m';
@@ -168,7 +175,7 @@ class SimpleAmazonView {
 
 		if( is_string($xml) ) {
 //			$html = $this->generate_item_html_nonres( $params['ItemId'] );
-			$html = '<!--Amazonのサーバでエラーが起こっているかもしれません。ページを再読み込みしてみてください。-->';
+			$html = 'Amazonのサーバでエラーが起こっているかもしれません。ページを再読み込みしてみてください。';
 		} else {
 			$html = $this->generate_item_html( $xml );
 		}
