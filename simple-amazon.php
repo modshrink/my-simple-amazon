@@ -199,18 +199,18 @@ function sa_meta_box_content() {
 
 <h4>レート</h4>
 	<ul class="sa-admin-rating">
-		<li>最高</li>
-		<li><input id="rate5" type="radio" name="sa-rate" value="5"<?php echo $checked0; ?>><label for="rate5">5</label></li>
-		<li><input id="rate4.5" type="radio" name="sa-rate" value="4.5"<?php echo $checked1; ?>><label for="rate4.5">4.5</label></li>
-		<li><input id="rate4" type="radio" name="sa-rate" value="4"<?php echo $checked2; ?>><label for="rate4">4</label></li>
-		<li><input id="rate3.5" type="radio" name="sa-rate" value="3.5"<?php echo $checked3; ?>><label for="rate3.5">3.5</label></li>
-		<li><input id="rate3" type="radio" name="sa-rate" value="3"<?php echo $checked4; ?>><label for="rate3">3</label></li>
-		<li><input id="rate2.5" type="radio" name="sa-rate" value="2.5"<?php echo $checked5; ?>><label for="rate2.5">2.5</label></li>
-		<li><input id="rate2" type="radio" name="sa-rate" value="2"<?php echo $checked6; ?>><label for="rate2">2</label></li>
-		<li><input id="rate1.5" type="radio" name="sa-rate" value="1.5"<?php echo $checked7; ?>><label for="rate1.5">1.5</label></li>
-		<li><input id="rate1" type="radio" name="sa-rate" value="1"<?php echo $checked8; ?>><label for="rate1">1</label></li>
-		<li><input id="rate0.5" type="radio" name="sa-rate" value="0.5"<?php echo $checked9; ?>><label for="rate0.5">0.5</label></li>
 		<li>最低</li>
+		<li><input id="rate0.5" type="radio" name="sa-rate" value="0.5"<?php echo $checked9; ?>><label for="rate0.5">0.5</label></li>
+		<li><input id="rate1" type="radio" name="sa-rate" value="1"<?php echo $checked8; ?>><label for="rate1">1</label></li>
+		<li><input id="rate1.5" type="radio" name="sa-rate" value="1.5"<?php echo $checked7; ?>><label for="rate1.5">1.5</label></li>
+		<li><input id="rate2" type="radio" name="sa-rate" value="2"<?php echo $checked6; ?>><label for="rate2">2</label></li>
+		<li><input id="rate2.5" type="radio" name="sa-rate" value="2.5"<?php echo $checked5; ?>><label for="rate2.5">2.5</label></li>
+		<li><input id="rate3" type="radio" name="sa-rate" value="3"<?php echo $checked4; ?>><label for="rate3">3</label></li>
+		<li><input id="rate3.5" type="radio" name="sa-rate" value="3.5"<?php echo $checked3; ?>><label for="rate3.5">3.5</label></li>
+		<li><input id="rate4" type="radio" name="sa-rate" value="4"<?php echo $checked2; ?>><label for="rate4">4</label></li>
+		<li><input id="rate4.5" type="radio" name="sa-rate" value="4.5"<?php echo $checked1; ?>><label for="rate4.5">4.5</label></li>
+		<li><input id="rate5" type="radio" name="sa-rate" value="5"<?php echo $checked0; ?>><label for="rate5">5</label></li>
+		<li>最高</li>
 	</ul>
 	<h4>AmazonへのリンクまたはASINコード</h4>
 	<input type="text" name="sa-asin" value="<?php echo $asin_value; ?>" size="40" />
