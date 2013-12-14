@@ -168,24 +168,31 @@ function sa_meta_box_content() {
 	$checked8 ="";
 	$checked9 ="";
 	$sa_rate = "";
-	
+	$custom_fields = NULL;
+	$rating_value = NULL;
+	$asin_value = NULL;
+
 	$custom_fields = get_post_custom();
-	$sa_custom_field_rating = $custom_fields['rating'];
-	foreach ( $sa_custom_field_rating as $key => $rating_value )
-	if($rating_value==5){ $checked0 = ' checked="checked"';} 
-	if($rating_value==4.5){ $checked1 = ' checked="checked"';} 
-	if($rating_value==4){ $checked2 = ' checked="checked"';} 
-	if($rating_value==3.5){ $checked3 = ' checked="checked"';} 
-	if($rating_value==3){ $checked4 = ' checked="checked"';} 
-	if($rating_value==2.5){ $checked5 = ' checked="checked"';} 
-	if($rating_value==2){ $checked6 = ' checked="checked"';} 
-	if($rating_value==1.5){ $checked7 = ' checked="checked"';} 
-	if($rating_value==1){ $checked8 = ' checked="checked"';} 
-	if($rating_value==0.5){ $checked9 = ' checked="checked"';} 
+	if(isset($custom_fields['rating'])) {
+		$sa_custom_field_rating = $custom_fields['rating'];
+	foreach ( $sa_custom_field_rating as $key => $rating_value ) {}
+		if($rating_value==5){ $checked0 = ' checked="checked"';} 
+		if($rating_value==4.5){ $checked1 = ' checked="checked"';} 
+		if($rating_value==4){ $checked2 = ' checked="checked"';} 
+		if($rating_value==3.5){ $checked3 = ' checked="checked"';} 
+		if($rating_value==3){ $checked4 = ' checked="checked"';} 
+		if($rating_value==2.5){ $checked5 = ' checked="checked"';} 
+		if($rating_value==2){ $checked6 = ' checked="checked"';} 
+		if($rating_value==1.5){ $checked7 = ' checked="checked"';} 
+		if($rating_value==1){ $checked8 = ' checked="checked"';} 
+		if($rating_value==0.5){ $checked9 = ' checked="checked"';} 
+	}
 
 	//ASINの取得
-	$sa_custom_field_asin = $custom_fields['amazon'];
-	foreach ( $sa_custom_field_asin as $key => $asin_value )
+	if(isset($custom_fields['amazon'])) {
+		$sa_custom_field_asin = $custom_fields['amazon'];
+	foreach ( $sa_custom_field_asin as $key => $asin_value ){}
+	}
 ?>
 
 <p>My Simple Amazonウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。 </p>
