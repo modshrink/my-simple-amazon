@@ -237,7 +237,7 @@ function sa_meta_box_content() {
  
 // メタボックスを追加する関数
 function sa_meta_box_output() {
-    add_meta_box('nskw_meta_post_page', 'あなたの評価 - My Simple Amazon', 'sa_meta_box_content', 'post', 'side', 'high' );
+    add_meta_box('nskw_meta_post_page', 'あなたの評価', 'sa_meta_box_content', 'post', 'side', 'high' );
 }
  
 // フックする
