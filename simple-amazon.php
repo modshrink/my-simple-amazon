@@ -13,6 +13,7 @@ Special Thanks: hiromasa.zone :o) (http://hiromasa.zone.ne.jp/)
 Special Thanks: PEAR :: Package :: Cache_Lite (http://pear.php.net/package/Cache_Lite)
 Special Thanks: Amazon® AWS HMAC signed request using PHP (http://mierendo.com/software/aws_signed_query/)
 Special Thanks: PHP による Amazon PAAPI の毎秒ルール制限の実装とキャッシュの構築例 (http://sakuratan.biz/archives/1395)
+Special Thanks: jRating (http://www.myjqueryplugins.com/jquery-plugin/jrating)
 */
 
 if( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) die();
@@ -172,6 +173,7 @@ function sa_meta_box_content() {
 	$rating_value = NULL;
 	$asin_value = NULL;
 
+
 	$custom_fields = get_post_custom();
 	if(isset($custom_fields['rating'])) {
 		$sa_custom_field_rating = $custom_fields['rating'];
@@ -195,25 +197,27 @@ function sa_meta_box_content() {
 	}
 ?>
 
-<p>My Simple Amazonウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。 </p>
+<p>My Simple Amazonウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。</p>
 
 <h4>レート</h4>
+   <div class="sa-rating-star" data-average="<?php echo $rating_value; ?>" data-id="1"></div>
 	<ul class="sa-admin-rating">
-		<li>最低</li>
-		<li><input id="rate0.5" type="radio" name="sa-rate" value="0.5"<?php echo $checked9; ?>><label for="rate0.5">0.5</label></li>
-		<li><input id="rate1" type="radio" name="sa-rate" value="1"<?php echo $checked8; ?>><label for="rate1">1</label></li>
-		<li><input id="rate1.5" type="radio" name="sa-rate" value="1.5"<?php echo $checked7; ?>><label for="rate1.5">1.5</label></li>
-		<li><input id="rate2" type="radio" name="sa-rate" value="2"<?php echo $checked6; ?>><label for="rate2">2</label></li>
-		<li><input id="rate2.5" type="radio" name="sa-rate" value="2.5"<?php echo $checked5; ?>><label for="rate2.5">2.5</label></li>
-		<li><input id="rate3" type="radio" name="sa-rate" value="3"<?php echo $checked4; ?>><label for="rate3">3</label></li>
-		<li><input id="rate3.5" type="radio" name="sa-rate" value="3.5"<?php echo $checked3; ?>><label for="rate3.5">3.5</label></li>
-		<li><input id="rate4" type="radio" name="sa-rate" value="4"<?php echo $checked2; ?>><label for="rate4">4</label></li>
-		<li><input id="rate4.5" type="radio" name="sa-rate" value="4.5"<?php echo $checked1; ?>><label for="rate4.5">4.5</label></li>
-		<li><input id="rate5" type="radio" name="sa-rate" value="5"<?php echo $checked0; ?>><label for="rate5">5</label></li>
-		<li>最高</li>
+		<li class="sa-rating rate0.5"><input id="rate0.5" type="radio" name="sa-rate" value="0.5"<?php echo $checked9; ?>><label for="rate0.5">0.5</label></li>
+		<li class="sa-rating rate1"><input id="rate1" type="radio" name="sa-rate" value="1"<?php echo $checked8; ?>><label for="rate1">1</label></li>
+		<li class="sa-rating rate1.5"><input id="rate1.5" type="radio" name="sa-rate" value="1.5"<?php echo $checked7; ?>><label for="rate1.5">1.5</label></li>
+		<li class="sa-rating rate2"><input id="rate2" type="radio" name="sa-rate" value="2"<?php echo $checked6; ?>><label for="rate2">2</label></li>
+		<li class="sa-rating rate2.5"><input id="rate2.5" type="radio" name="sa-rate" value="2.5"<?php echo $checked5; ?>><label for="rate2.5">2.5</label></li>
+		<li class="sa-rating rate3"><input id="rate3" type="radio" name="sa-rate" value="3"<?php echo $checked4; ?>><label for="rate3">3</label></li>
+		<li class="sa-rating rate3.5"><input id="rate3.5" type="radio" name="sa-rate" value="3.5"<?php echo $checked3; ?>><label for="rate3.5">3.5</label></li>
+		<li class="sa-rating rate4"><input id="rate4" type="radio" name="sa-rate" value="4"<?php echo $checked2; ?>><label for="rate4">4</label></li>
+		<li class="sa-rating rate4.5"><input id="rate4.5" type="radio" name="sa-rate" value="4.5"<?php echo $checked1; ?>><label for="rate4.5">4.5</label></li>
+		<li class="sa-rating rate5"><input id="rate5" type="radio" name="sa-rate" value="5"<?php echo $checked0; ?>><label for="rate5">5</label></li>
 	</ul>
 	<h4>AmazonへのリンクまたはASINコード</h4>
 	<input type="text" name="sa-asin" value="<?php echo $asin_value; ?>" size="40" />
+
+
+
 <?php
 
 //update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
