@@ -13,3 +13,16 @@
 *html #simple-amazon-options-menu { zoom: 1; }
 *:first-child+html #simple-amazon-options-menu { zoom: 1; }
 
+.sa-admin-rating {
+	display: none;
+
+}
+
+.sa-admin-rating li {
+	margin: 0 3px;
+	display: inline;
+	list-style: none;
+}
+
+
+
