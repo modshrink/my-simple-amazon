@@ -23,7 +23,7 @@ class SimpleAmazonAdmin {
 		//アクションの設定
 		add_action('admin_menu', array($this, 'simple_amazon_add_options'));
 		add_action('admin_enqueue_scripts', array($this, 'addScripts'));
-
+		add_action('admin_footer', array($this, 'admin_inline_js'));
 	}
 
 	/**
@@ -34,11 +34,39 @@ class SimpleAmazonAdmin {
 		//javascript
 		wp_enqueue_script('jquery-ui-tabs', array('jquery'));
 		wp_enqueue_script('simple-amazon-admin', SIMPLE_AMAZON_PLUGIN_URL.'/include/simple-amazon-admin.js', array('jquery-ui-tabs'), SIMPLE_AMAZON_VER);
+		wp_enqueue_script( 'jRating-js', SIMPLE_AMAZON_PLUGIN_URL.'/include/jRating.jquery.js', array(), '3.1', true );
 
 		//css
 		wp_enqueue_style('simple-amazon-admin', SIMPLE_AMAZON_PLUGIN_URL.'/include/simple-amazon-admin.css', array(), SIMPLE_AMAZON_VER);
+		wp_enqueue_style('jRating-css', SIMPLE_AMAZON_PLUGIN_URL.'/include/jRating.jquery.css', array(), 3.1);
 	}
-	
+
+function admin_inline_js(){
+	echo "<script type='text/javascript'>";
+		echo "(function($){";
+			echo "$(document).ready(function(){";
+				echo "$('.sa-rating-star').jRating({";
+				echo "bigStarsPath : '".SIMPLE_AMAZON_PLUGIN_URL."/images/icons/stars.png',";
+				echo "smallStarsPath : '".SIMPLE_AMAZON_PLUGIN_URL."/images/icons/small.png',";
+				echo "type : 'big',";
+		        echo "step: false,";
+		        echo "length : 5,";
+				echo "rateMax : 5,";
+				echo "decimalLength : 1,";
+				echo "nbRates: 9999,";
+				echo "sendRequest: false,";
+				echo "canRateAgain: true,";
+				echo "onClick: function(element, rate) {";
+					echo "$(\"input[name='sa-rate']\").val([rate]);";
+				echo "}";
+		        echo "});";
+			echo "});";
+		echo "})(jQuery);";
+	echo "</script>";
+}
+
+
+
 	/**
 	 * @brief	管理画面のhtmlを生成する
 	 * @param	none
