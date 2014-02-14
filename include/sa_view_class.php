@@ -43,6 +43,7 @@ class SimpleAmazonView {
 		);
 	}
 
+
 	/**
 	 * PHP の関数として Amazon の個別商品 HTML を呼び出す
 	 * @param	string $asin
@@ -176,6 +177,7 @@ class SimpleAmazonView {
 		if( is_string($xml) ) {
 //			$html = $this->generate_item_html_nonres( $params['ItemId'] );
 			$html = 'Amazonのサーバでエラーが起こっているかもしれません。ページを再読み込みしてみてください。';
+			//$html = print_r($xml);
 		} else {
 			$html = $this->generate_item_html( $xml );
 		}
@@ -253,6 +255,10 @@ class SimpleAmazonView {
 		}
 
 		// テンプレート //
+		//
+		if( $layout_type == 4 ) {
+			$output = $attr->Title;
+		}
 		//Title
 		if( $layout_type == 3 ) {
 			$output = '<a href="'.$url.'"' . $windowtarget . '>' . $attr->Title . '</a>';

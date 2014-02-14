@@ -45,7 +45,9 @@ function admin_inline_js(){
 	echo "<script type='text/javascript'>";
 		echo "(function($){";
 			echo "$(document).ready(function(){";
-				echo "$('.sa-rating-star').jRating({";
+
+				//jRating Options
+				echo "$('div.sa-rating-star').jRating({";
 				echo "bigStarsPath : '".SIMPLE_AMAZON_PLUGIN_URL."/images/icons/stars.png',";
 				echo "smallStarsPath : '".SIMPLE_AMAZON_PLUGIN_URL."/images/icons/small.png',";
 				echo "type : 'big',";
@@ -58,8 +60,32 @@ function admin_inline_js(){
 				echo "canRateAgain: true,";
 				echo "onClick: function(element, rate) {";
 					echo "$(\"input[name='sa-rate']\").val([rate]);";
+						echo "if($('.selected-rate') != null) {";
+							echo "$('.selected-rate').remove();";
+							echo "$(\"div.sa-rating-star\").after('<div class=\"selected-rate\">'+rate+'</div>');";
+						echo "} else {";
+							echo "$(\"div.sa-rating-star\").after('<div class=\"selected-rate\">'+rate+'</div>');";
+						echo "}";
 				echo "}";
 		        echo "});";
+
+				//Reset ASIN form
+				echo "$(\"button.sa-asin-code\").click(function(){";
+            		echo "$(\"input.sa-asin-code\").val(\"\");";
+            	echo "});";
+
+				//Reset Rating select
+				echo "$(\".sa-rating-star-clear\").click(function(){";
+					echo "$(\"input:radio[name='sa-rate']\").attr({'checked':false});";
+					echo "if($('.selected-rate') != null) {";
+						echo "$('.selected-rate').remove();";
+						echo "$(\"div.sa-rating-star\").after('<div class=\"selected-rate\">-</div>');";
+						echo "$('.jRatingAverage').css( 'width','0');";
+					echo "} else {";
+						echo "$(\"div.sa-rating-star\").after('<div class=\"selected-rate\">-</div>');";
+					echo "}";
+            	echo "});";
+
 			echo "});";
 		echo "})(jQuery);";
 	echo "</script>";

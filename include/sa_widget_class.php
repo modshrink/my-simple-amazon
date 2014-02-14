@@ -25,17 +25,18 @@ class MyWidget extends WP_Widget {
 		$title = (isset($par['title']) && $par['title']) ? $par['title'] : '';
 		$id = $this->get_field_id('title');
 		$name = $this->get_field_name('title');
-		echo 'タイトル：<br />';
+		echo "<p>";
+		echo '<label>タイトル：</label>';
 		echo '<input type="text" id="'.$id.'" name="'.$name.'" value="';
 		echo trim(htmlentities($title, ENT_QUOTES, 'UTF-8'));
 		echo '" />';
-		echo '<br />';
+		echo '</p>';
 		 
 		// テキストの入力
 		$text = (isset($par['text']) && $par['text']) ? $par['text'] : '';
 		$id = $this->get_field_id('text');
 		$name = $this->get_field_name('text');
-		echo '投稿のカスタムフィールドで設定した商品が表示されます。';
+		echo '<p>投稿のカスタムフィールドで設定した商品が表示されます。</p>';
 
 	}
 
@@ -45,25 +46,26 @@ class MyWidget extends WP_Widget {
 
 	public function widget($args, $par) {
 		global $post;
-		if(is_single()) {
+		$rating = get_post_meta($post->ID,"rating",true);
+		if(is_single() && $rating != 0 && $rating != NULL) {
 			echo $args['before_widget'];
-			echo $args['before_title'];
-			echo trim(htmlentities($par['title'], ENT_QUOTES, 'UTF-8'));
-			echo $args['after_title'];
+			if($par['title']) {
+				echo $args['before_title'];
+				echo trim(htmlentities($par['title'], ENT_QUOTES, 'UTF-8'));
+				echo $args['after_title'];
+			}
 ?>
 
-			<aside id="entry-meta" class="widget amazon">
+			<div class="simple-amazon-widget">
 				<div itemscope itemtype="http://data-vocabulary.org/Review">
 					<?php simple_amazon_custum_view(); ?>
 				<h2>このサイトでの評価</h2>
-					<?php $rating = get_post_meta($post->ID,"rating",true);
-					?>
 					<p class="rating-star rate<?php echo $rating; ?>"><meta itemprop="rating" content="<?php echo $rating; ?>" /></p>
-					<p>評価 » <span itemprop="rating"><?php echo $rating; ?></span>/5</p>
 					<p>評価アイテム » <span itemprop="itemreviewed"><?php echo get_post_meta($post->ID,"item",true); ?></span></p>
 					<p>レビュアー » <span itemprop="reviewer"><?php the_author_meta('display_name'); ?></span></p>
+					<p>評価日 » <time itemprop="dtreviewed" datetime="<?php echo get_post_time('Y-m-d'); ?>"><?php echo get_post_time('Y-m-d'); ?></time></p>
 				</div>
-			</aside>
+			</div>
 
 <?php
 

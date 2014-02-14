@@ -3,15 +3,13 @@
 ---------------------------------------------- */
 
 /* cleafix */
-#simple-amazon-options-menu:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
+#simple-amazon-options-menu:after,
+#sa-meta-box:after,
+#rating-star-admin:after {
+    content: "";
+    display: table;
+    clear: both;
 }
-*html #simple-amazon-options-menu { zoom: 1; }
-*:first-child+html #simple-amazon-options-menu { zoom: 1; }
 
 .sa-admin-rating {
 	display: none;
@@ -24,5 +22,27 @@
 	list-style: none;
 }
 
+#side-sortables input.sa-asin-code{
+	width: 75%;
+}
 
+#normal-sortables input.sa-asin-code {
+	width: 50%;
+}
 
+.sa-asin-item {
+	color: #7F7F7F;
+}
+
+#rating-star-admin {
+	width: 200px;
+}
+
+.sa-rating-star {
+	margin: 0 15px 0 0;
+	float: left;
+}
+
+.selected-rate {
+	font-weight: bold;
+}

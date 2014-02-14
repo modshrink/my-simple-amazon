@@ -146,6 +146,19 @@ function simple_amazon_custum_view() {
 	$simpleAmazonView->view_custom_field();
 }
 
+function simple_amazon_item_view($asin, $style) {
+	global $simpleAmazonView;
+	if(preg_match("/[A-Z0-9]{10,13}/", $asin)) {
+		preg_match("/[A-Z0-9]{10,13}/", $asin, $match);
+	} else {
+		preg_match("/\/[A-Z0-9]{10,13}\//", $asin, $match);
+	}
+	// $asin = $match["0"];
+	$asin = str_replace("/", "", $match["0"]);
+	$sa_item = $simpleAmazonView->generate($asin, $style);
+	return $sa_item;
+}
+
 /* ウィジェット表示 */
 add_action('widgets_init', create_function('', 'return register_widget("MyWidget");'));
 
@@ -158,20 +171,22 @@ add_action('widgets_init', create_function('', 'return register_widget("MyWidget
 function sa_meta_box_content() {
 
 	//レートの取得
-	$checked0 ="";
-	$checked1 ="";
-	$checked2 ="";
-	$checked3 ="";
-	$checked4 ="";
-	$checked5 ="";
-	$checked6 ="";
-	$checked7 ="";
-	$checked8 ="";
-	$checked9 ="";
+	$checked0 = "";
+	$checked1 = "";
+	$checked2 = "";
+	$checked3 = "";
+	$checked4 = "";
+	$checked5 = "";
+	$checked6 = "";
+	$checked7 = "";
+	$checked8 = "";
+	$checked9 = "";
+	$checked10 = "";
 	$sa_rate = "";
 	$custom_fields = NULL;
 	$rating_value = NULL;
 	$asin_value = NULL;
+	$item_value = NULL;
 
 
 	$custom_fields = get_post_custom();
@@ -188,6 +203,7 @@ function sa_meta_box_content() {
 		if($rating_value==1.5){ $checked7 = ' checked="checked"';} 
 		if($rating_value==1){ $checked8 = ' checked="checked"';} 
 		if($rating_value==0.5){ $checked9 = ' checked="checked"';} 
+		if($rating_value==0){ $checked10 = ' checked="checked"';} 
 	}
 
 	//ASINの取得
@@ -195,13 +211,27 @@ function sa_meta_box_content() {
 		$sa_custom_field_asin = $custom_fields['amazon'];
 	foreach ( $sa_custom_field_asin as $key => $asin_value ){}
 	}
+	if(isset($custom_fields['item'])) {
+		$sa_custom_field_asin = $custom_fields['item'];
+	foreach ( $sa_custom_field_asin as $key => $item_value ){}
+	}
 ?>
 
-<p>My Simple Amazonウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。</p>
+	<p>ウィジェットに表示される情報です。あなたの評価とAmazonの情報を入力してください。</p>
 
-<h4>レート</h4>
-   <div class="sa-rating-star" data-average="<?php echo $rating_value; ?>" data-id="1"></div>
+	<h4>AmazonへのリンクまたはASINコード</h4>
+	<p><input class="sa-asin-code" type="text" name="sa-asin" value="<?php echo $asin_value; ?>" /></p>
+	<p class="sa-asin-item"><?php if($item_value){ echo $item_value; } else { echo "商品が未登録です。"; } ?></p>
+	<p><button class="button sa-asin-code" type="button">初期化</button></p>
+
+	<h4>レート<?php if($rating_value){ echo "(現在のレート: " .$rating_value. ")"; } else { echo "(無し)"; } ?></h4>
+	<div id="rating-star-admin">
+		<div class="sa-rating-star" data-average="<?php if($rating_value > 0 && $rating_value != NULL){ echo $rating_value; } else { echo "0"; } ?>" data-id="1"></div>
+	</div>
+	<p><button class="button sa-rating-star-clear" type="button">初期化</button></p>
+
 	<ul class="sa-admin-rating">
+		<li class="sa-rating rate0"><input id="rate0.5" type="radio" name="sa-rate" value="0"<?php echo $checked10; ?>><label for="rate0.5">0</label></li>
 		<li class="sa-rating rate0.5"><input id="rate0.5" type="radio" name="sa-rate" value="0.5"<?php echo $checked9; ?>><label for="rate0.5">0.5</label></li>
 		<li class="sa-rating rate1"><input id="rate1" type="radio" name="sa-rate" value="1"<?php echo $checked8; ?>><label for="rate1">1</label></li>
 		<li class="sa-rating rate1.5"><input id="rate1.5" type="radio" name="sa-rate" value="1.5"<?php echo $checked7; ?>><label for="rate1.5">1.5</label></li>
@@ -213,38 +243,31 @@ function sa_meta_box_content() {
 		<li class="sa-rating rate4.5"><input id="rate4.5" type="radio" name="sa-rate" value="4.5"<?php echo $checked1; ?>><label for="rate4.5">4.5</label></li>
 		<li class="sa-rating rate5"><input id="rate5" type="radio" name="sa-rate" value="5"<?php echo $checked0; ?>><label for="rate5">5</label></li>
 	</ul>
-	<h4>AmazonへのリンクまたはASINコード</h4>
-	<input type="text" name="sa-asin" value="<?php echo $asin_value; ?>" size="40" />
-
-
 
 <?php
-
-//update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
-
 
 } //sa_meta_box_content()
 
 	function post_rating($post_id) {
-			$post = get_post($post_id);
-			$sa_post_id = $post->ID;
-			$sa_rate = $_POST["sa-rate"];
-			$sa_asin = $_POST["sa-asin"];
-			$prev_rate = get_post_meta($sa_post_id, "rating", true);
-			$prev_asin = get_post_meta($sa_post_id, "amazon", true);
-			update_post_meta($post_id, "rating", $sa_rate, $prev_rate);
-			update_post_meta($post_id, "amazon", $sa_asin, $prev_asin);
-
+		$post = get_post($post_id);
+		$sa_post_id = $post->ID;
+		$sa_rate = $_POST["sa-rate"];
+		$sa_asin = $_POST["sa-asin"];
+		$sa_item = simple_amazon_item_view($sa_asin, 'name=&layout_type=4&imgsize=');
+		$sa_item = htmlspecialchars($sa_item);
+		$prev_rate = get_post_meta($sa_post_id, "rating", true);
+		$prev_asin = get_post_meta($sa_post_id, "amazon", true);
+		$prev_item = get_post_meta($sa_post_id, "item", true);
+		update_post_meta($post_id, "rating", $sa_rate, $prev_rate);
+		update_post_meta($post_id, "amazon", $sa_asin, $prev_asin);
+		update_post_meta($post_id, "item", $sa_item, $prev_item);
 	}
-
 	add_action('publish_post', 'post_rating');
  
 // メタボックスを追加する関数
 function sa_meta_box_output() {
-    add_meta_box('nskw_meta_post_page', 'あなたの評価', 'sa_meta_box_content', 'post', 'side', 'high' );
+    add_meta_box('sa-meta-box', 'あなたの評価', 'sa_meta_box_content', 'post', 'side', 'high' );
 }
- 
-// フックする
 add_action('admin_menu', 'sa_meta_box_output' );
 
 
