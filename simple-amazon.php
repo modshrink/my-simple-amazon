@@ -1,13 +1,16 @@
 <?php
 /*
 Plugin Name: My Simple Amazon
-Plugin URI: http://www.modshrink.com/
-Description: ASIN を指定して Amazon から個別商品の情報を取出します。BOOKS, DVD, CD は詳細情報を取り出せます。
-Author: mayoibi
-Version: 0.0.1
+Plugin URI:https://github.com/modshrink/simple-amazon-widget
+Description: ウィジェットに対応した、Amazonアソシエイト挿入プラグインです。
+Author: modshrink
+Version: 0.0.1-dev
 Author URI: http://www.modshrink.com/
-Code based on icoro(http://www.icoro.com/simple-amazon)
-Special Thanks: tomokame (http://http://tomokame.moo.jp/)
+
+Contributor
+Tomokame: Create wp-tmkm-amazon plugin first development in 2007. (http://tomokame.moo.jp/)
+icoro: Fixed legacy codes and built this plugin bases. (http://www.icoro.com/simple-amazon)
+
 Special Thanks: websitepublisher.net (http://www.websitepublisher.net/article/aws-php/)
 Special Thanks: hiromasa.zone :o) (http://hiromasa.zone.ne.jp/)
 Special Thanks: PEAR :: Package :: Cache_Lite (http://pear.php.net/package/Cache_Lite)
